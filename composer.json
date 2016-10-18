@@ -1,0 +1,12 @@
+{
+    "name": "srdjanmarjanovic/bootstrap",
+    "description": "Quick and simple way to bootstrap a project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Srdjan Marjanovic",
+            "email": "srdjan.marjan@gmail.com"
+        }
+    ],
+    "require": {}
+}
