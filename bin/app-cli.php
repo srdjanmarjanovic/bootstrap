@@ -8,8 +8,13 @@ use App\Models\Foo;
 // $foo->last_name = 'jovic';
 // $foo->save();
 
-// $foo->first_name = 'srdjan';
-// $foo->save();
+// $bar = new Foo($db_connection);
+// $bar->first_name = 'srdjan';
+// $bar->save();
 
-$mjau = (new Foo($db_connection))->find(9);
-// $foo->delete();
+$mjau = (new Foo($db_connection))->all();
+
+foreach ($mjau as $khm) {
+	var_dump($khm->id, $khm->first_name, $khm->last_name);
+}
+// $mjau->delete();

@@ -28,6 +28,7 @@ class MySQLConnection implements IConnection
 	{
 		if (empty($this->connection)) {
         	$this->connection = new PDO("mysql:host={$this->host}:{$this->port};dbname={$this->db_name}", $this->username, $this->password);
+        	$this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		}
 
         return $this;

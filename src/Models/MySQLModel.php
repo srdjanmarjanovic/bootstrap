@@ -52,7 +52,24 @@ abstract class MySQLModel implements IModel
 
 		$result = $statement->fetch($this->db->connection::FETCH_ASSOC);
 
-		return $this->hydrate($result);
+		return $this->hydrate($this, $result);
+	}
+
+	/**
+	 * Return a list of all resources.
+	 * 
+	 * @return array
+	 */
+	public function all()
+	{
+		$list = [];
+        foreach($this->db->connection->query("SELECT * FROM {$this->getTableName()}") as $row) {
+        	$class = get_class($this);
+        	$resource = new $class($this->db);
+            $list[] = $this->hydrate($resource, $row);
+        }
+
+		return $list;
 	}
 
 	/**
@@ -156,16 +173,17 @@ abstract class MySQLModel implements IModel
 	}
 
 	/**
-	 * Bind database fields to model properties.
-	 * 
-	 * @param  array $result
+	 * Bind database fields to resource properties.
+	 *
+	 * @param  MySQLModel $resource 
+	 * @param  array      $result
 	 */
-	private function hydrate($result)
+	private function hydrate($resource, $result)
 	{
-		foreach ($this->getFields() as $field) {
-			$this->$field = $result[$field];
+		foreach ($resource->getFields() as $field) {
+			$resource->$field = $result[$field];
 		}
 
-		return $this;
+		return $resource;
 	}
 }
